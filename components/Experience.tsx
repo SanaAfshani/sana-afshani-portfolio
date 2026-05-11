@@ -1,127 +1,133 @@
 "use client";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
-import { experience } from "@/app/data";
-import AnimatedSection from "./AnimatedSection";
 import { ChevronDown } from "lucide-react";
+import { useLang } from "@/context/LangContext";
+import { siteData } from "@/app/data";
 
-export default function Experience() {
-  return (
-    <section id="experience" className="px-6 py-24 max-w-5xl mx-auto">
-      <AnimatedSection>
-        <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: "var(--accent-light)" }}>
-          Where I've worked
-        </p>
-        <h2 className="text-4xl font-black mb-16" style={{ color: "var(--foreground)" }}>
-          Experience
-        </h2>
-      </AnimatedSection>
+type ColorKey = "red" | "orange" | "pink" | "green";
 
-      <div className="relative">
-        {/* Timeline line */}
-        <div
-          className="absolute left-0 top-2 bottom-2 w-px hidden sm:block"
-          style={{ background: "var(--border)" }}
-        />
+const ExternalLinkIcon = () => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+    <polyline points="15 3 21 3 21 9"/>
+    <line x1="10" y1="14" x2="21" y2="3"/>
+  </svg>
+);
 
-        <div className="flex flex-col gap-10">
-          {experience.map((job, i) => (
-            <ExperienceItem key={job.company} job={job} index={i} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ExperienceItem({
+function ExpCard({
   job,
   index,
+  defaultOpen,
 }: {
-  job: (typeof experience)[0];
+  job: (typeof siteData.en.experience)[0];
   index: number;
+  defaultOpen: boolean;
 }) {
-  const ref = useRef(null);
+  const ref    = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
-  const [open, setOpen] = useState(index === 0);
+  const [open, setOpen] = useState(defaultOpen);
+  const ck = job.colorKey as ColorKey;
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, x: -30 }}
-      animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      className="sm:pl-8 relative"
+      className="exp-card"
+      initial={{ opacity: 0, y: 22 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.55, delay: index * 0.1 }}
     >
-      {/* dot */}
-      <motion.div
-        className="absolute left-0 top-2 w-2 h-2 rounded-full -translate-x-[3px] hidden sm:block"
-        style={{ background: "var(--accent)" }}
-        initial={{ scale: 0 }}
-        animate={inView ? { scale: 1 } : {}}
-        transition={{ delay: index * 0.1 + 0.3 }}
-      />
-
-      <button
-        className="w-full text-left group"
-        onClick={() => setOpen((v) => !v)}
-      >
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h3 className="text-lg font-bold leading-tight" style={{ color: "var(--foreground)" }}>
-              {job.company}
-            </h3>
-            <p className="text-sm mt-0.5" style={{ color: "var(--accent-light)" }}>
-              {job.role}
-            </p>
+      {/* Card header — clickable */}
+      <button className="exp-card-btn" onClick={() => setOpen((v) => !v)}>
+        <div className="exp-meta">
+          <div className="exp-company-row">
+            <span className="exp-company-name">{job.company}</span>
+            {job.website && (
+              <a
+                href={job.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="exp-link-icon"
+                onClick={(e) => e.stopPropagation()}
+                title={`Visit ${job.company}`}
+              >
+                <ExternalLinkIcon />
+              </a>
+            )}
+            <span className={`exp-period exp-period--${ck}`}>{job.period}</span>
           </div>
-          <div className="flex items-center gap-3 shrink-0 mt-1">
-            <span
-              className="text-xs font-medium px-2.5 py-1 rounded-full whitespace-nowrap"
-              style={{
-                background: "rgba(124,58,237,0.1)",
-                color: "#9999bb",
-                border: "1px solid var(--border)",
-              }}
-            >
-              {job.period}
-            </span>
-            <motion.div animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.25 }}>
-              <ChevronDown size={16} style={{ color: "#555577" }} />
-            </motion.div>
-          </div>
+          <p className="exp-role">{job.role}</p>
         </div>
+
+        <motion.span
+          className="exp-chevron"
+          animate={{ rotate: open ? 180 : 0 }}
+          transition={{ duration: 0.22 }}
+        >
+          <ChevronDown size={15} />
+        </motion.span>
       </button>
 
+      {/* Expandable body */}
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            className="exp-body"
+            key="body"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: "easeInOut" }}
+          >
+            <div className="exp-body-inner">
+              <ul className="exp-highlights">
+                {job.highlights.map((h, hi) => (
+                  <motion.li
+                    key={hi}
+                    className="exp-highlight"
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: hi * 0.04, duration: 0.28 }}
+                  >
+                    <span className={`exp-highlight-dot exp-dot--${ck}`} />
+                    <span>{h}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+export default function Experience() {
+  const { lang, dir } = useLang();
+  const d      = siteData[lang];
+  const ref    = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  return (
+    <section id="experience" className="section-wrap" dir={dir}>
       <motion.div
-        initial={false}
-        animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        style={{ overflow: "hidden" }}
+        ref={ref}
+        className="section-head"
+        initial={{ opacity: 0, y: 20 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.55 }}
       >
-        <ul className="mt-4 space-y-2.5">
-          {job.highlights.map((h, hi) => (
-            <motion.li
-              key={hi}
-              initial={{ opacity: 0, x: -10 }}
-              animate={open ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: hi * 0.05, duration: 0.35 }}
-              className="flex gap-3 text-sm leading-relaxed"
-              style={{ color: "#8888aa" }}
-            >
-              <span
-                className="mt-2 shrink-0 rounded-full"
-                style={{ width: 4, height: 4, background: "var(--accent)", display: "block" }}
-              />
-              {h}
-            </motion.li>
-          ))}
-        </ul>
+        <span className="section-num">02</span>
+        <div className="section-rule" />
+        <h2 className="section-title">{d.experienceTitle}</h2>
       </motion.div>
 
-      {index < experience.length - 1 && (
-        <div className="mt-8 border-t" style={{ borderColor: "var(--border)" }} />
-      )}
-    </motion.div>
+      <div className="exp-list">
+        {d.experience.map((job, i) => (
+          <ExpCard key={job.company} job={job} index={i} defaultOpen={i === 0} />
+        ))}
+      </div>
+    </section>
   );
 }
