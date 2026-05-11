@@ -204,7 +204,8 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
 }
 .nav-link:hover .nav-bar, .nav-link--active .nav-bar { width: 48px; background: var(--accent-lt); }
 
-[dir="rtl"] .nav-link { flex-direction: row-reverse; text-align: end; }
+/* In RTL sidebar: num → bar → text (right to left) */
+[dir="rtl"] .nav-link { flex-direction: row-reverse; }
 
 /* ─────────────────────────────────────────────────────────
    SIDEBAR CONTACT
@@ -224,10 +225,9 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
 
 .sb-actions {
   display: flex; gap: 8px; flex-wrap: wrap;
-  justify-content: start; margin-block-start: 0;
+  justify-content: start;
 }
-[dir="rtl"] .sb-actions  { justify-content: end; }
-[dir="rtl"] .sb-social-row { justify-content: end; }
+/* sb-social-row & sb-contact-item RTL handled via component conditional rendering */
 [dir="rtl"] .sb-contact-item { flex-direction: row-reverse; }
 
 .btn-ghost {
@@ -269,11 +269,13 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
   font-size: 0.75rem; font-weight: 700;
   letter-spacing: 0.2em; color: var(--accent);
   text-transform: uppercase; white-space: nowrap;
+  text-align: start;
 }
 .section-title {
   font-size: clamp(1.8rem, 2.8vw, 2.4rem);
   font-weight: 900; color: var(--t1);
   letter-spacing: -0.025em; white-space: nowrap;
+  text-align: start;
 }
 .section-rule { flex: 1; height: 1px; background: var(--border); }
 
@@ -328,9 +330,9 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
 .stat-value {
   font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 900;
   color: var(--accent-lt); line-height: 1;
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: tabular-nums; text-align: start;
 }
-.stat-label { font-size: 0.82rem; color: var(--t2); line-height: 1.45; }
+.stat-label { font-size: 0.82rem; color: var(--t2); line-height: 1.45; text-align: start; }
 
 /* ─────────────────────────────────────────────────────────
    SKILLS
@@ -342,7 +344,7 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
 .skill-group-title {
   font-size: 0.76rem; font-weight: 700;
   letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--accent-lt);
+  color: var(--accent-lt); text-align: start;
 }
 
 .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -389,7 +391,7 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
   align-items: center; gap: 8px;
   margin-block-end: 5px;
 }
-.exp-company-name { font-size: 1.05rem; font-weight: 700; color: var(--t1); }
+.exp-company-name { font-size: 1.05rem; font-weight: 700; color: var(--t1); text-align: start; }
 
 .exp-link-icon {
   display: inline-flex; color: var(--t3);
@@ -408,7 +410,7 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
 .exp-period--pink  { background: rgba(236,72,153,.1); color:#f472b6; border-color:rgba(236,72,153,.3); }
 .exp-period--green { background: rgba(34,197,94,.1);  color:#4ade80; border-color:rgba(34,197,94,.3);  }
 
-.exp-role { font-size: 0.87rem; font-weight: 600; color: var(--accent-lt); }
+.exp-role { font-size: 0.87rem; font-weight: 600; color: var(--accent-lt); text-align: start; }
 
 .exp-chevron { flex-shrink: 0; margin-block-start: 4px; color: var(--t3); }
 
@@ -454,11 +456,11 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
   font-size: 1.15rem;
 }
 
-.edu-degree { font-size: 1rem; font-weight: 700; color: var(--t1); line-height: 1.4; }
-.edu-school { font-size: 0.86rem; color: var(--t2); }
+.edu-degree { font-size: 1rem; font-weight: 700; color: var(--t1); line-height: 1.4; text-align: start; }
+.edu-school { font-size: 0.86rem; color: var(--t2); text-align: start; }
 
 .edu-year {
-  display: inline-block; align-self: flex-start;
+  display: inline-block; align-self: start;
   font-size: 0.72rem; font-weight: 700;
   padding: 4px 12px; border-radius: 999px;
   background: var(--accent-dim); color: var(--accent-lt);
@@ -595,7 +597,12 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
 
   /* Actions row */
   .sb-actions { flex-wrap: nowrap; }
-  [dir="rtl"] .sb-actions { justify-content: flex-start; }
+
+  /* RTL nav: scroll starts from inline-start (right in RTL) */
+  [dir="rtl"] .nav-list { direction: rtl; }
+
+  /* Section head in RTL: title on right, rule extends left */
+  [dir="rtl"] .section-head { flex-direction: row-reverse; }
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -616,17 +623,26 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
 
   .edu-grid    { grid-template-columns: 1fr; }
 
+  /* Contact stacks vertically; QR aligns to inline-start (left LTR, right RTL) */
   .contact-layout    { flex-direction: column; gap: 2rem; }
-  .contact-qr        { align-items: flex-start; }
-  [dir="rtl"] .contact-qr { align-items: flex-start; }
+  .contact-qr        { align-items: start; }
+
+  /* Contact CTA row: align to inline-start in both directions */
+  .contact-cta-row   { justify-content: start; }
+  [dir="rtl"] .contact-cta-row { justify-content: start; }
 
   .exp-company-row   { flex-wrap: wrap; gap: 6px; }
   .exp-card-btn      { padding: 1.1rem 1.2rem; }
   .exp-body-inner    { padding: 0 1.2rem 1.25rem; }
 
-  .overview-bio      { font-size: 0.94rem; }
+  /* exp-highlight: dot always at inline-start */
+  [dir="rtl"] .exp-highlight { flex-direction: row; }
 
+  .overview-bio      { font-size: 0.94rem; }
   .skills-list       { gap: 2rem; }
+
+  /* skill-tags flow from inline-start */
+  [dir="rtl"] .skill-tags { justify-content: flex-start; }
 }
 
 /* ─────────────────────────────────────────────────────────

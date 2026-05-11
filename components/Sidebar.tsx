@@ -45,11 +45,7 @@ export default function Sidebar() {
   }, []);
 
   return (
-    <aside
-      className="sidebar"
-      dir={dir}
-      style={{ fontFamily: isFa ? "'Vazirmatn', sans-serif" : "'Inter', system-ui, sans-serif" }}
-    >
+    <aside className="sidebar" dir={dir}>
       {/* Eyebrow */}
       <motion.p
         className="sb-eyebrow"
