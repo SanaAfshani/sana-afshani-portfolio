@@ -4,7 +4,6 @@
    TOKENS
 ───────────────────────────────────────────────────────── */
 :root {
-  --bg:            #07071200;
   --bg:            #070712;
   --bg-2:          #0d0d1e;
   --bg-3:          #12122a;
@@ -526,6 +525,137 @@ button { background: none; border: none; cursor: pointer; font: inherit; color: 
   border-block-start: 1px solid var(--border);
 }
 .contact-footer-text { font-size: 0.72rem; color: var(--t4); text-align: start; }
+
+/* ─────────────────────────────────────────────────────────
+   RESPONSIVE — TABLET & MOBILE (≤ 1024px)
+   Sidebar collapses into sticky top header
+───────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .page-layout { flex-direction: column; }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: auto;
+    overflow-y: visible;
+    padding: 1rem 1.5rem;
+    border-inline-end: none;
+    border-block-end: 1px solid var(--border);
+    background: rgba(7, 7, 18, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 50;
+  }
+
+  .main-content { margin-inline-start: 0; width: 100%; }
+
+  /* Hide elements that clutter the compact header */
+  .sb-eyebrow,
+  .sb-bio,
+  .sb-contact-list,
+  .sb-spacer { display: none; }
+
+  /* Compact name */
+  .sb-name {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin-block-end: 0.3rem;
+  }
+
+  /* Compact typewriter */
+  .sb-typewriter {
+    font-size: 0.78rem;
+    margin-block-end: 0.6rem;
+    min-height: unset;
+  }
+
+  /* Compact dividers */
+  .sb-divider { margin-block-end: 0.6rem; }
+
+  /* Nav → horizontal scrollable bar */
+  .nav-list {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 4px;
+    padding-block-end: 2px;
+    margin-block-end: 0.65rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .nav-list::-webkit-scrollbar { display: none; }
+
+  .nav-link {
+    padding: 6px 14px;
+    white-space: nowrap;
+    border-radius: 999px;
+    font-size: 0.78rem;
+  }
+  .nav-num,
+  .nav-bar { display: none; }
+
+  /* Actions row */
+  .sb-actions { flex-wrap: nowrap; }
+  [dir="rtl"] .sb-actions { justify-content: flex-start; }
+}
+
+/* ─────────────────────────────────────────────────────────
+   RESPONSIVE — MOBILE (≤ 768px)
+───────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .section-wrap  { padding: 3rem 1.25rem; }
+  .overview-wrap { padding: 2.5rem 1.25rem 2rem; }
+
+  .section-title {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    white-space: normal;
+  }
+  .section-head { gap: 12px; margin-block-end: 2rem; }
+
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stat-value  { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+
+  .edu-grid    { grid-template-columns: 1fr; }
+
+  .contact-layout    { flex-direction: column; gap: 2rem; }
+  .contact-qr        { align-items: flex-start; }
+  [dir="rtl"] .contact-qr { align-items: flex-start; }
+
+  .exp-company-row   { flex-wrap: wrap; gap: 6px; }
+  .exp-card-btn      { padding: 1.1rem 1.2rem; }
+  .exp-body-inner    { padding: 0 1.2rem 1.25rem; }
+
+  .overview-bio      { font-size: 0.94rem; }
+
+  .skills-list       { gap: 2rem; }
+}
+
+/* ─────────────────────────────────────────────────────────
+   RESPONSIVE — SMALL MOBILE (≤ 480px)
+───────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .sidebar { padding: 0.85rem 1rem; }
+
+  .sb-name { font-size: clamp(1.3rem, 7vw, 1.7rem); }
+
+  .section-wrap  { padding: 2.5rem 1rem; }
+  .overview-wrap { padding: 2rem 1rem 1.5rem; }
+
+  .stats-grid    { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-card     { padding: 1rem 1.1rem; }
+  .stat-label    { font-size: 0.75rem; }
+
+  .contact-cta-row        { flex-direction: column; }
+  .contact-btn-primary,
+  .contact-btn-secondary  { width: 100%; justify-content: center; }
+
+  .qr-card { width: 100%; }
+
+  .exp-highlight { font-size: 0.85rem; }
+
+  .tag { font-size: 0.75rem; padding: 4px 11px; }
+
+  .section-num { display: none; }
+}
 
 /* ─────────────────────────────────────────────────────────
    PRINT
