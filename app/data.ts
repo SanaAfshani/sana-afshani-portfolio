@@ -49,7 +49,7 @@ export const siteData = {
     experience: [
       {
         company: 'Snapp Doctor Co.',
-        website: 'https://snappdoctor.ir',
+        website: 'https://pwa.snapp.doctor/',
         role: 'Front-End Developer',
         period: 'Dec 2023 – Jun 2025',
         colorKey: 'red' as const,
@@ -182,7 +182,7 @@ export const siteData = {
     experience: [
       {
         company: 'Snapp Doctor Co.',
-        website: 'https://snappdoctor.ir',
+        website: 'https://pwa.snapp.doctor/',
         role: 'توسعه‌دهنده فرانت‌اند',
         period: 'دی ۱۴۰۲ – شهریور ۱۴۰۴',
         colorKey: 'red' as const,
