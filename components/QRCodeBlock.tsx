@@ -3,7 +3,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { useLang } from "@/context/LangContext";
 import { siteData } from "@/app/data";
 
-const PDF_URL = "https://canva.link/fsk4gre0jjba0d0";
+const PDF_URL = "https://canva.link/ki0zsauqho7sj2g";
 
 const DownloadIcon = () => (
   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"

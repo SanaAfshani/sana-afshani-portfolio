@@ -157,7 +157,7 @@ export default function Sidebar() {
         transition={{ duration: 0.5, delay: 0.6 }}
       >
         <a
-          href="https://canva.link/fsk4gre0jjba0d0"
+          href="https://canva.link/ki0zsauqho7sj2g"
           target="_blank"
           rel="noopener noreferrer"
           className="btn-ghost"
