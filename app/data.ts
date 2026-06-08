@@ -48,6 +48,21 @@ export const siteData = {
     ],
     experience: [
       {
+        company: 'TES.co',
+        website: 'http://tes.ca/',
+        role: 'Front-End Developer',
+        period: 'Feb 2025 – Present',
+        colorKey: 'blue' as const,
+        highlights: [
+          'Developed and maintained modern web applications for transportation and traffic management systems.',
+          'Built responsive and user-friendly interfaces using React, TypeScript, and modern front-end technologies.',
+          'Implemented dashboards, reporting modules, and data visualization features for traffic and transportation data analysis.',
+          'Collaborated with cross-functional teams to deliver scalable, high-performance solutions for municipalities and transportation authorities.',
+          'Improved application performance, usability, and accessibility while ensuring a seamless user experience.',
+          'Integrated front-end applications with RESTful APIs and backend services.',
+        ],
+      },
+      {
         company: 'Snapp Doctor Co.',
         website: 'https://pwa.snapp.doctor/',
         role: 'Front-End Developer',
@@ -180,6 +195,21 @@ export const siteData = {
       { category: 'مدیریت فرم', items: ['React Hook Form', 'Formik'] },
     ],
     experience: [
+      {
+        company: 'TES.co',
+        website: 'http://tes.ca/',
+        role: 'توسعه‌دهنده فرانت‌اند',
+        period: 'بهمن ۱۴۰۳ – اکنون',
+        colorKey: 'blue' as const,
+        highlights: [
+          'توسعه و نگهداری اپلیکیشن‌های وب مدرن برای سیستم‌های مدیریت حمل‌ونقل و ترافیک.',
+          'ساخت رابط‌های کاربری ریسپانسیو و کاربرپسند با React، TypeScript و فناوری‌های مدرن فرانت‌اند.',
+          'پیاده‌سازی داشبوردها، ماژول‌های گزارش‌دهی و ویژگی‌های تجسم داده برای تحلیل داده‌های ترافیک و حمل‌ونقل.',
+          'همکاری با تیم‌های چندتخصصی برای ارائه راهکارهای مقیاس‌پذیر و پرفورمنس بالا برای شهرداری‌ها و مراجع حمل‌ونقل.',
+          'بهبود عملکرد، کاربردپذیری و دسترس‌پذیری اپلیکیشن با تضمین تجربه کاربری روان.',
+          'یکپارچه‌سازی اپلیکیشن‌های فرانت‌اند با RESTful APIها و سرویس‌های بکند.',
+        ],
+      },
       {
         company: 'Snapp Doctor Co.',
         website: 'https://pwa.snapp.doctor/',

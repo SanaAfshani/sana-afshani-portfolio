@@ -5,7 +5,7 @@ import { ChevronDown } from "lucide-react";
 import { useLang } from "@/context/LangContext";
 import { siteData } from "@/app/data";
 
-type ColorKey = "red" | "orange" | "pink" | "green";
+type ColorKey = "red" | "orange" | "pink" | "green" | "blue";
 
 const ExternalLinkIcon = () => (
   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
